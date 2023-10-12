@@ -1,0 +1,210 @@
+<html lang="pt_br">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Smart Calculator - Acrisio SuperSS Dev</title>
+	<style>
+		#display-container {
+			width: 100%;
+			height: 100%;
+		}
+
+		#status-display {
+			position: absolute;
+			bottom: 100px;
+			right: 20px;
+			color: cyan;
+		}
+
+		#status-display ul {
+			list-style-type: none;
+		}
+
+		#stats {
+			position: absolute;
+			top: 15px;
+			left: 15px;
+		}
+
+		div .dg {
+			position: absolute;
+			top: 20px;
+			right: 20px;
+		}
+
+		.label {
+			grid-column: 1 / 2;
+		}
+
+		.input {
+			grid-column: 2 / 3;
+		}
+		
+		.container-grid {
+			display: grid;
+			grid-template-columns: auto 120px auto;
+			grid-row-gap: 5px;
+			grid-column-gap: 10px;
+			margin-bottom: 10px;
+		}
+	</style>
+	<script>
+		function toggleView(el) {
+
+			let display = 'none';
+			let label = 'Show';
+			let top = el;
+
+			if (el.innerHTML.toUpperCase() == 'SHOW') {
+				display = 'grid';
+				label = 'Hidden';
+			}
+
+			// set label
+			el.innerHTML = label;
+
+			while ((top = top.nextElementSibling)) {
+
+				if (top.nodeName !== 'SCRIPT')
+					top.style.display = display;
+			}
+		}
+	</script>
+
+</head>
+
+<body style="background-color: pink;">
+	<div id="display-container" style="display: flex; align-items: center; flex-direction: column;">
+		<h1 style="margin-bottom: 20px;"><b><text style="font-size:49px"><text style="font-family:'Bahnschrift'">Smart Calculator</b></text></h1>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<div id="wedegt-config" style="display: flex; flex-direction: column; z-index: 10; padding: 10px">
+				<div>
+					<label style="color:maroon"><text style="font-size:20px"><b>Client config</b></text></label>
+					<button id="toggleView" onclick="toggleView(this)">Hide</button>
+					<div class="container-grid" style="padding-top: 10px; grid-template-columns: auto 120px auto;">
+				<label class="label">จอ: </label><select class="input" id="dis">
+					<option value="1">PB BIG</option>
+					<option value="1">800x600</option>
+					<option value="1.25">800x600 pb เล็ก</option>
+					<option value="1.5">1280x720</option>
+					<option value="1.875">1600x900</option>
+				</select>
+					</div><br>
+					<label style="color:maroon"><text style="font-size:20px"><center><b>Character status</b></center></text></label>
+					<div class="container-grid" style="padding-top: 10px;">
+						<label class="label">Power รวม :</label>
+						<input class="input" id="power" type="text" value="36">
+						<label class="label">ระยะแหวน (y) :</label>
+						<input class="input" id="auxpart_pwr" type="text" value="4">
+						<label class="label">การ์ด Lolo (y) :</label>
+						<input class="input" id="card_ps_pwr" type="text" value="6">
+						<label hidden class="label">Card Power :</label>
+						<input hidden class="input" id="card_pwr" type="text" value="0">
+						<label hidden class="label">Mascot Power :</label>
+						<input hidden class="input" id="mascot_pwr" type="text" value="0">
+						<label class="label">ระยะไม้ของคุณ =</label>
+						<input class="output" id="current_drive" type="text" <text style="color:Red"></text>
+					</div>
+						<div style="display: grid; grid-template-columns: 70px 120px auto;">
+						<button style="width: 250px; height: 50px" onClick="checkdrive(this)"><b><text style="color:Red"><text style="font-size:20px">เช็คระยะไม้</text></b></button>
+				</div>
+			</div>
+		
+
+			<label style="color:maroon"><br><text style="font-size:20px"><center><b>Calculator ZONE</b></center></text></label>
+			<div class="container-grid" style="padding-top: 10px;">
+				<label class="label">เลือกไม้ : </label><select class="input" id="club">
+					<option value="0">1W</option>
+					<option value="1">2W</option>
+					<option value="2">3W</option>
+					<option value="3">2I</option>
+					<option value="4">3I</option>
+					<option value="5">4I</option>
+					<option value="6">5I</option>
+					<option value="7">6I</option>
+					<option value="8">7I</option>
+					<option value="9">8I</option>
+					<option value="10">9I</option>
+					<option value="11">PW</option>
+					<option value="12">SW</option>
+				</select>
+				<label class="label">เลือกท่าตี : </label><select class="input" id="shot">
+					<option value="0">Dunk</option>
+					<option value="1">Tomahawk</option>
+					<option value="2">Spike</option>
+					<option value="3">Cobra</option>
+				</select>
+				<label class="label">จำนวนเกจ : </label><select class="input" id="power_shot">
+				<option value="0">Normal Shot</option>
+				<option value="1">1 Power Shot</option>
+				<option value="2">2 Power Shot</option>
+				<option value="3">15y Power Shot</option>
+				</select>
+			</div>
+				<div>
+					<label style="color:maroon"><br><br><text style="font-size:20px"><b>Mycella Slope Formula</b></text></label>
+					<button id="toggleView" onclick="toggleView(this)">Hide</button>
+					<div id="mycella" class="container-grid" style="padding-top: 10px;">
+						<label class="label">ตัวคูณเอียง: 		</label>
+						<input class="input" id="x-slope" type="text">
+						<label class="label">PX: 		</label>
+						<input class="input" id="px" type="text">
+						<label class="label">DG: 		</label>
+						<input class="input" id="align-degree" type="text">
+						<label class="label">+/-: 		</label>
+						<select class="input" id="slope-side">
+							<option value="+1">+</option>
+							<option value="-1">-</option>
+						</select>
+						<input type="reset" value="Cal" onClick="calcMycella(this)">
+					</div>	
+				</div>
+
+			<div>
+					<label style="color:maroon"><br><br><text style="font-size:20px"><center><b>คำนวนองศาลม</b></center></text></label>
+					<div id="anglecalc" class="container-grid" style="padding-top: 10px">
+						<label id="anglecalc" class="label">ใส่องศาแบบ 90 : </label>
+						<input class="input" id="degree90" type="text"><br>
+						<button onClick="anglecalc1(this)">◤</button>
+						<button onClick="anglecalc4(this)">◥</button><br>
+						<button onClick="anglecalc2(this)">◣</button>
+						<button onClick="anglecalc3(this)">◢</button>
+					</div>
+			</div>	
+
+		<form>
+			<div class="container-grid"><br>
+				<label class="label">ระยะหลุม : </label>
+				<input class="input" id="distance" type="text">
+				<label class="label">หลุมสูงต่ำ : </label>
+				<input class="input" id="height" type="text">
+				<label class="label">แรงลม : </label>
+				<input class="input" id="wind" type="text">
+				<label class="label">องศาลม : </label>
+				<input class="input" id="degree" type="text">
+				<label class="label">ลูกเอียง : </label>
+				<input class="input" id="slope_break" type="text">
+				<label class="label">เอฟเฟคลูก : </label>
+				<input class="input" id="ground" value="100" type="text">
+				<label class="label">สปิน : </label>
+				<input class="input" id="spin" type="text">
+				<label class="label">เคิฟ : </label>
+				<input class="input" id="curve" type="text">
+				<label class="label">Aim: </label>
+				<input class="input" id="aim" value="4" type="text">
+				<input type="reset" value="เคลียร์" name="data">
+			</div>
+		</form>
+		<div style="display: grid; grid-template-columns: 90px 120px auto;">
+			<button style="width: 250px; height: 40px" onClick="calc(this)"><b><text style="color:Green"><text style="font-size:24px">Calculate</text></b></button>
+		</div>
+		</div>
+		<span style="margin-top: 5px;">
+			<font id="result"></font><br>
+		</span>
+		<center><rodape style="padding: 10px; font-size: 10px"><b>Developed by Acrisio SuperSS Dev<b></rodape></center>
+	</div>
+	<script src="smart_calculator.js"></script>
+</body>
+
+</html>
